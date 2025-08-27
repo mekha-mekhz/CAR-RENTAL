@@ -1,82 +1,87 @@
-import React, { useState } from "react";
+import React from "react";
 
 function Contact() {
-    const [formData, setFormData] = useState({
-        name: "",
-        email: "",
-        phone: "",
-        message: "",
-    });
-
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
-    };
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        alert(`Thank you ${formData.name}, we will contact you soon!`);
-        setFormData({ name: "", email: "", phone: "", message: "" }); // reset
-    };
-
     return (
-        <div className="flex justify-center items-center min-h-screen bg-gray-100">
-            <div className="bg-white shadow-lg rounded-2xl p-8 w-full max-w-lg">
-                <h2 className="text-2xl font-bold text-center mb-6 text-blue-700">
-                    📩 Contact Us
-                </h2>
-                <form onSubmit={handleSubmit} className="space-y-4">
+        <div className="min-h-screen bg-gray-100 py-12 px-4">
+            <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-xl p-10 md:p-16">
+
+                {/* Heading */}
+                <h1 className="text-4xl md:text-5xl font-bold mb-3 text-center text-blue-700">Contact Us</h1>
+                <p className="text-center text-gray-600 mb-10 text-lg">
+                    Have a question or need assistance? We’re here to help!
+                </p>
+
+                {/* Section 1: Contact Details */}
+                <div className="space-y-8 mb-12">
                     <div>
-                        <label className="block text-gray-700 font-medium">Name</label>
-                        <input
-                            type="text"
-                            name="name"
-                            value={formData.name}
-                            onChange={handleChange}
-                            required
-                            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        />
+                        <h2 className="text-2xl font-semibold text-blue-700 mb-2">Our Location</h2>
+                        <p className="text-gray-700">123 FastLane Street, CarCity, CA 90210</p>
                     </div>
+
                     <div>
-                        <label className="block text-gray-700 font-medium">Email</label>
-                        <input
-                            type="email"
-                            name="email"
-                            value={formData.email}
-                            onChange={handleChange}
-                            required
-                            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        />
+                        <h2 className="text-2xl font-semibold text-blue-700 mb-2">Call Us</h2>
+                        <p className="text-gray-700">+91 98765 43210</p>
                     </div>
+
                     <div>
-                        <label className="block text-gray-700 font-medium">Phone</label>
-                        <input
-                            type="tel"
-                            name="phone"
-                            value={formData.phone}
-                            onChange={handleChange}
-                            required
-                            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        />
+                        <h2 className="text-2xl font-semibold text-blue-700 mb-2">Email</h2>
+                        <p className="text-gray-700">support@fastlane.com</p>
                     </div>
+
                     <div>
-                        <label className="block text-gray-700 font-medium">Message</label>
-                        <textarea
-                            name="message"
-                            value={formData.message}
-                            onChange={handleChange}
-                            required
-                            rows="4"
-                            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        ></textarea>
+                        <h2 className="text-2xl font-semibold text-blue-700 mb-2">Get in Touch</h2>
+                        <p className="text-gray-700">We’d love to hear from you. Share your questions or feedback!</p>
                     </div>
-                    <button
-                        type="submit"
-                        className="w-full bg-blue-600 text-white font-semibold py-2 rounded-lg hover:bg-blue-700 transition"
-                    >
-                        Send Message
-                    </button>
-                </form>
+                </div>
+
+                {/* Section 2: Contact Form */}
+                <div>
+                    <form className="space-y-6">
+                        <div>
+                            <label className="block text-gray-700 font-medium mb-1">Full Name</label>
+                            <input
+                                type="text"
+                                placeholder="Your Full Name"
+                                className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            />
+                        </div>
+
+                        <div>
+                            <label className="block text-gray-700 font-medium mb-1">Email Address</label>
+                            <input
+                                type="email"
+                                placeholder="your.email@example.com"
+                                className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            />
+                        </div>
+
+                        <div>
+                            <label className="block text-gray-700 font-medium mb-1">Phone Number</label>
+                            <input
+                                type="tel"
+                                placeholder="+91 98765 43210"
+                                className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            />
+                        </div>
+
+                        <div>
+                            <label className="block text-gray-700 font-medium mb-1">Message</label>
+                            <textarea
+                                rows="5"
+                                placeholder="Write your message here..."
+                                className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            ></textarea>
+                        </div>
+
+                        <button
+                            type="submit"
+                            className="w-full bg-blue-700 text-white font-semibold py-3 rounded-lg hover:bg-blue-800 transition"
+                        >
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+
             </div>
         </div>
     );

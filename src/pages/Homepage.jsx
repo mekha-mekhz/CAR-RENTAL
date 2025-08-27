@@ -15,7 +15,7 @@ function Homepage() {
             {/* Content */}
             <div className="relative z-10 flex flex-col justify-center items-center h-full text-center text-white px-6">
                 <h1 className="text-5xl md:text-6xl font-bold mb-4">
-                    Welcome to <span className="text-yellow-400">CarRental</span>
+                    Welcome to <span className="text-yellow-400">FastLane</span>
                 </h1>
                 <p className="text-lg md:text-xl mb-6 max-w-2xl">
                     Rent your dream car today. Affordable, reliable, and available anytime you need.

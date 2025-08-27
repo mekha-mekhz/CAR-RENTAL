@@ -8,12 +8,12 @@ function Filter() {
     const [price, setPrice] = useState("All");
 
     useEffect(() => {
-        fetch("/cars.json") // cars.json must be inside public/
+        fetch("/cars.json")
             .then((res) => res.json())
             .then((data) => setCars(data));
     }, []);
 
-    // Filtering logic
+
     const filteredCars = cars.filter((car) => {
         const matchesSearch =
             query === "" ||
