@@ -1,0 +1,182 @@
+[
+  {
+    "id": 1,
+    "name": "Toyota Corolla",
+    "brand": "Toyota",
+    "price": 4500,
+    "seats": 5,
+    "fuel": "Petrol",
+    "image": "https://images.unsplash.com/photo-1605559424843-9e682c43d0f7"
+  },
+  {
+    "id": 2,
+    "name": "Honda Civic",
+    "brand": "Honda",
+    "price": 50,
+    "seats": 5,
+    "fuel": "Petrol",
+    "image": "https://images.unsplash.com/photo-1502877338535-766e1452684a"
+  },
+  {
+    "id": 3,
+    "name": "Ford Focus",
+    "brand": "Ford",
+    "price": 48,
+    "seats": 5,
+    "fuel": "Diesel",
+    "image": "https://images.unsplash.com/photo-1511919884226-fd3cad34687c"
+  },
+  {
+    "id": 4,
+    "name": "BMW 3 Series",
+    "brand": "BMW",
+    "price": 85,
+    "seats": 5,
+    "fuel": "Petrol",
+    "image": "https://images.unsplash.com/photo-1619767886558-efdc35b5d1a9"
+  },
+  {
+    "id": 5,
+    "name": "Mercedes C-Class",
+    "brand": "Mercedes",
+    "price": 90,
+    "seats": 5,
+    "fuel": "Diesel",
+    "image": "https://images.unsplash.com/photo-1583121274602-3e2820c69888"
+  },
+  {
+    "id": 6,
+    "name": "Audi A4",
+    "brand": "Audi",
+    "price": 88,
+    "seats": 5,
+    "fuel": "Petrol",
+    "image": "https://images.unsplash.com/photo-1597002974092-3bda3ef43f5b"
+  },
+  {
+    "id": 7,
+    "name": "Hyundai Elantra",
+    "brand": "Hyundai",
+    "price": 40,
+    "seats": 5,
+    "fuel": "Petrol",
+    "image": "https://images.unsplash.com/photo-1601560896164-834dbda89389"
+  },
+  {
+    "id": 8,
+    "name": "Kia Optima",
+    "brand": "Kia",
+    "price": 42,
+    "seats": 5,
+    "fuel": "Petrol",
+    "image": "https://images.unsplash.com/photo-1592839718078-7d4bde9d9470"
+  },
+  {
+    "id": 9,
+    "name": "Tesla Model 3",
+    "brand": "Tesla",
+    "price": 120,
+    "seats": 5,
+    "fuel": "Electric",
+    "image": "https://images.unsplash.com/photo-1502872364588-894d7d92a3a2"
+  },
+  {
+    "id": 10,
+    "name": "Nissan Altima",
+    "brand": "Nissan",
+    "price": 4700,
+    "seats": 5,
+    "fuel": "Petrol",
+    "image": "https://images.unsplash.com/photo-1549921296-3a0883a3b0e6"
+  },
+  {
+    "id": 11,
+    "name": "Chevrolet Malibu",
+    "brand": "Chevrolet",
+    "price": 49,
+    "seats": 5,
+    "fuel": "Petrol",
+    "image": "https://images.unsplash.com/photo-1620891549027-942c43d6c9c2"
+  },
+  {
+    "id": 12,
+    "name": "Volkswagen Passat",
+    "brand": "Volkswagen",
+    "price": 55,
+    "seats": 5,
+    "fuel": "Diesel",
+    "image": "https://images.unsplash.com/photo-1581009137042-c552e485697e"
+  },
+  {
+    "id": 13,
+    "name": "Skoda Superb",
+    "brand": "Skoda",
+    "price": 60,
+    "seats": 5,
+    "fuel": "Diesel",
+    "image": "https://images.unsplash.com/photo-1523983302122-8f7c9c12c1ee"
+  },
+  {
+    "id": 14,
+    "name": "Volvo S60",
+    "brand": "Volvo",
+    "price": 75,
+    "seats": 5,
+    "fuel": "Petrol",
+    "image": "https://images.unsplash.com/photo-1595341888016-a392ef81b7de"
+  },
+  {
+    "id": 15,
+    "name": "Jaguar XE",
+    "brand": "Jaguar",
+    "price": 9500,
+    "seats": 5,
+    "fuel": "Petrol",
+    "image": "https://images.unsplash.com/photo-1583121575774-8b3a9a48d8ef"
+  },
+  {
+    "id": 16,
+    "name": "Porsche 911",
+    "brand": "Porsche",
+    "price": 1500,
+    "seats": 2,
+    "fuel": "Petrol",
+    "image": "https://images.unsplash.com/photo-1503736334956-4c8f8e92946d"
+  },
+  {
+    "id": 17,
+    "name": "Lamborghini Huracan",
+    "brand": "Lamborghini",
+    "price": 400,
+    "seats": 2,
+    "fuel": "Petrol",
+    "image": "https://images.unsplash.com/photo-1605559424843-9e682c43d0f7"
+  },
+  {
+    "id": 18,
+    "name": "Ferrari 488",
+    "brand": "Ferrari",
+    "pricePer": 2500,
+    "seats": 2,
+    "fuel": "Petrol",
+    "image": "https://images.unsplash.com/photo-1597002974092-3bda3ef43f5b"
+  },
+  {
+    "id": 19,
+    "name": "Jeep Wrangler",
+    "brand": "Jeep",
+    "price": 80,
+    "seats": 5,
+    "fuel": "Diesel",
+    "image": "https://images.unsplash.com/photo-1619767886558-efdc35b5d1a9"
+  },
+  {
+    "id": 20,
+    "name": "Range Rover Evoque",
+    "brand": "Land Rover",
+    "price": 1300,
+    "seats": 5,
+    "fuel": "Diesel",
+    "image": "https://images.unsplash.com/photo-1620891549027-942c43d6c9c2"
+  }
+]

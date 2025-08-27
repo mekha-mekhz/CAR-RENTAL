@@ -7,6 +7,8 @@ import Register from "./pages/Register"
 import About from "./pages/About"
 import Contact from "./pages/Contact"
 import Carlist from "./components/Carlist"
+import BookingForm from "./pages/Bookingform"
+import Filter from "./pages/Filter"
 
 
 function App() {
@@ -32,6 +34,10 @@ function App() {
             path: "/contact", element: <Contact />
           }, {
             path: "/cars", element: <Carlist />
+          }, {
+            path: "/booking", element: <BookingForm />
+          }, {
+            path: "/search", element: <Filter />
           }
 
         ]
