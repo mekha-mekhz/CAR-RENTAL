@@ -10,6 +10,11 @@ import Carlist from "./components/Carlist"
 import BookingForm from "./pages/Bookingform"
 import Filter from "./pages/Filter"
 
+import CustomerRegister from "./pages/CustomerRegister"
+import AgencyRegister from "./pages/AgencyRegister"
+import Cardetails from "./pages/Cardetails"
+import BookingSummary from "./pages/BookingSummary"
+
 
 function App() {
   const router = createBrowserRouter(
@@ -38,6 +43,15 @@ function App() {
             path: "/booking", element: <BookingForm />
           }, {
             path: "/search", element: <Filter />
+          }, {
+            path: "/cars/:carId", element: <Cardetails />
+          },
+          {
+            path: "/register-customer", element: <CustomerRegister />
+          }, {
+            path: "/register-agency", element: <AgencyRegister />
+          }, {
+            path: "/booking-summary", element: <BookingSummary />
           }
 
         ]

@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom"; // ✅ import useNavigate
 
 function Filter() {
     const [cars, setCars] = useState([]);
-    const [queryInput, setQueryInput] = useState(""); // live typing
-    const [query, setQuery] = useState(""); // applied search
+    const [queryInput, setQueryInput] = useState("");
+    const [query, setQuery] = useState("");
     const [brand, setBrand] = useState("All");
     const [price, setPrice] = useState("All");
+
+    const navigate = useNavigate(); // ✅ hook for navigation
 
     useEffect(() => {
         fetch("/cars.json")
             .then((res) => res.json())
             .then((data) => setCars(data));
     }, []);
-
 
     const filteredCars = cars.filter((car) => {
         const matchesSearch =
@@ -31,13 +33,17 @@ function Filter() {
         return matchesSearch && matchesBrand && matchesPrice;
     });
 
+    // ✅ navigate to BookingForm with car details
+    const handleBookNow = (car) => {
+        navigate("/booking", { state: car });
+    };
+
     return (
         <div className="p-6">
             <h1 className="text-3xl font-bold mb-6 text-center">Find Your Car</h1>
 
             {/* Search + Filters */}
             <div className="flex flex-wrap gap-4 mb-6 justify-center">
-                {/* Search input */}
                 <input
                     type="text"
                     placeholder="Search by name or brand..."
@@ -46,13 +52,12 @@ function Filter() {
                     className="border p-2 rounded-lg w-64"
                 />
                 <button
-                    onClick={() => setQuery(queryInput)} // apply search
+                    onClick={() => setQuery(queryInput)}
                     className="bg-blue-600 text-white px-4 rounded-lg hover:bg-blue-700"
                 >
                     Search
                 </button>
 
-                {/* Brand Filter */}
                 <select
                     value={brand}
                     onChange={(e) => setBrand(e.target.value)}
@@ -65,7 +70,6 @@ function Filter() {
                     <option value="Audi">Audi</option>
                 </select>
 
-                {/* Price Filter */}
                 <select
                     value={price}
                     onChange={(e) => setPrice(e.target.value)}
@@ -94,7 +98,12 @@ function Filter() {
                             <h2 className="text-xl font-semibold">{car.name}</h2>
                             <p className="text-gray-600">Brand: {car.brand}</p>
                             <p className="text-gray-600">Price: ${car.price}</p>
-                            <button className="mt-4 w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">
+
+                            {/* ✅ Book Now */}
+                            <button
+                                onClick={() => handleBookNow(car)}
+                                className="mt-4 w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700"
+                            >
                                 Book Now
                             </button>
                         </div>

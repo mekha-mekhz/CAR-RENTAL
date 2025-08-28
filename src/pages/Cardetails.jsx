@@ -1,34 +1,49 @@
-import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
-import axios from 'axios'
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 function Cardetails() {
-    const { carId } = useParams()
-    const [car, setCar] = useState(null)
+    const { carId } = useParams(); // ✅ get carId from URL
+    const [car, setCar] = useState(null);
 
     useEffect(() => {
-        axios.get("/cars.json")
-            .then((response) => {
-                // find the car by ID
-                const selectedCar = response.data.find((c) => c.id === parseInt(carId))
-                setCar(selectedCar)
-            })
-            .catch((error) => console.log(error))
-    }, [carId])
+        fetch("https://mekha-mekhz.github.io/carsdetails/cardetails.json")
+            .then((res) => res.json())
+            .then((data) => {
+                const foundCar = data.find((c) => c.id === parseInt(carId));
+                setCar(foundCar);
+            });
+    }, [carId]);
 
     if (!car) {
-        return <h2 className="text-center text-gray-500 mt-6">Loading car details...</h2>
+        return <h2 className="text-center text-xl">Loading car details...</h2>;
     }
 
     return (
-        <div className="max-w-xl mx-auto bg-white shadow-lg rounded-lg p-6 mt-6">
-            <img src={car.image} alt={car.name} className="w-full h-60 object-cover rounded-md mb-4" />
-            <h2 className="text-2xl font-bold mb-2">{car.name}</h2>
-            <p className="text-gray-700"><strong>Brand:</strong> {car.brand}</p>
-            <p className="text-gray-700"><strong>Type:</strong> {car.type}</p>
-            <p className="text-gray-700"><strong>Seats:</strong> {car.seats}</p>
+        <div className="max-w-3xl mx-auto p-6 bg-white shadow-lg rounded-xl mt-6">
+            <img
+                src={car.image}
+                alt={car.name}
+                className="w-full h-64 object-cover rounded-lg mb-4"
+            />
+            <h1 className="text-3xl font-bold mb-2">{car.name}</h1>
+            <p className="text-gray-600 mb-2">Brand: {car.brand}</p>
+            <p className="text-gray-600 mb-2">Model: {car.model}</p>
+            <p className="text-gray-600 mb-2">Year: {car.year}</p>
+            <p className="text-gray-800 font-semibold mb-2">
+                Price per day: ${car.price}
+            </p>
+            <p className="text-gray-600 mb-2">Type: {car.type}</p>
+            <p className="text-gray-600 mb-2">
+                Features: {car.features?.join(", ")}
+            </p>
+            <p
+                className={`mt-2 font-bold ${car.available ? "text-green-600" : "text-red-600"
+                    }`}
+            >
+                {car.available ? "Available" : "Not Available"}
+            </p>
         </div>
-    )
+    );
 }
 
-export default Cardetails
+export default Cardetails;
