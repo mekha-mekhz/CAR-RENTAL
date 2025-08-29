@@ -28,7 +28,7 @@ function BookingSummary() {
             </h1>
 
             <h2 className="text-xl font-semibold mb-2">Car Details</h2>
-            <p><strong>Name:</strong> {car.name}</p>
+            <p><strong>Name:</strong> {car.model}</p>
             <p><strong>Brand:</strong> {car.brand}</p>
             <p><strong>Price:</strong> ${car.price}</p>
 
