@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom"; // ✅ import Link
+import { Link } from "react-router-dom";
 
 function Carlist() {
     const [cars, setCars] = useState([]);
@@ -28,7 +28,7 @@ function Carlist() {
                         <h2 className="text-xl font-semibold">{car.name}</h2>
                         <p className="text-gray-600">Brand: {car.brand}</p>
 
-                        {/* ✅ View More navigates to details page */}
+
                         <Link
                             to={`/cars/${car.id}`}
                             className="mt-4 block text-center bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700"

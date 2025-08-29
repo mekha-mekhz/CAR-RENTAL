@@ -9,11 +9,14 @@ import Contact from "./pages/Contact"
 import Carlist from "./components/Carlist"
 import BookingForm from "./pages/Bookingform"
 import Filter from "./pages/Filter"
-
+import Cart from "./pages/Cart"
 import CustomerRegister from "./pages/CustomerRegister"
 import AgencyRegister from "./pages/AgencyRegister"
 import Cardetails from "./pages/Cardetails"
 import BookingSummary from "./pages/BookingSummary"
+import Wishlist from "./pages/Wishlist"
+import CustomerDashboard from "./pages/CustomDash"
+import RentalDashboard from "./pages/RentalDash"
 
 
 function App() {
@@ -52,6 +55,14 @@ function App() {
             path: "/register-agency", element: <AgencyRegister />
           }, {
             path: "/booking-summary", element: <BookingSummary />
+          }, {
+            path: "/cart", element: <Cart />
+          }, {
+            path: "/wishlist", element: <Wishlist />
+          }, {
+            path: "/dashboard", element: <CustomerDashboard />
+          }, {
+            path: "/agencydash", element: <RentalDashboard />
           }
 
         ]

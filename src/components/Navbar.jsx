@@ -1,63 +1,62 @@
-// import React from "react";
-// import { Link } from "react-router-dom";
-
-// function Navbar() {
-//     return (
-//         <nav className="bg-blue-700 text-white px-6 py-3 flex justify-between items-center shadow-md">
-//             {/* Brand / Logo */}
-//             <div className="text-2xl font-bold">
-//                 <Link to="/">🚗 CarRental</Link>
-//             </div>
-
-//             {/* Nav Links */}
-//             <div className="flex items-center space-x-6 text-lg">
-//                 <Link to="/" className="hover:text-yellow-300">HOME</Link>
-//                 <Link to="/about" className="hover:text-yellow-300">ABOUT</Link>
-//                 <Link to="/search" className="hover:text-yellow-300">CARS</Link>
-//                 <Link to="/contact" className="hover:text-yellow-300">CONTACT</Link>
-//                 <Link
-//                     to="/login"
-//                     className="bg-yellow-400 text-black px-4 py-1 rounded-lg hover:bg-yellow-500"
-//                 >
-//                     LOGIN
-//                 </Link>
-//             </div>
-//         </nav>
-//     );
-// }
-
-// export default Navbar;
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 function Navbar() {
+    const navigate = useNavigate();
+    const [loggedInUser, setLoggedInUser] = useState(null);
     const [isOpen, setIsOpen] = useState(false);
+
+    // Load logged-in user from localStorage
+    useEffect(() => {
+        const user = JSON.parse(localStorage.getItem("loggedInUser"));
+        setLoggedInUser(user);
+    }, []);
+
+    const handleLogout = () => {
+        localStorage.removeItem("loggedInUser");
+        setLoggedInUser(null);
+        navigate("/login");
+    };
 
     return (
         <nav className="bg-blue-600 text-white px-4 py-3 shadow-md">
             <div className="flex justify-between items-center">
                 {/* Logo */}
-                <Link to="/" className="text-xl font-bold">
-                    Car Rental
-                </Link>
+                <Link to="/" className="text-xl font-bold">Car Rental</Link>
 
                 {/* Desktop Menu */}
-                <ul className="hidden md:flex gap-6">
+                <ul className="hidden md:flex gap-6 items-center">
                     <li>
                         <Link to="/" className="hover:text-gray-200">Home</Link>
-                    </li>
-                    <li>
-                        <Link to="/about" className="hover:text-gray-200">About</Link>
                     </li>
                     <li>
                         <Link to="/search" className="hover:text-gray-200">Search</Link>
                     </li>
                     <li>
-                        <Link to="/contact" className="hover:text-gray-200">Contact</Link>
+                        <Link to="/cart" className="hover:text-gray-200">Cart</Link>
                     </li>
                     <li>
-                        <Link to="/login" className="hover:text-gray-200">Login</Link>
+                        <Link to="/wishlist" className="hover:text-gray-200">Wishlist</Link>
                     </li>
+
+                    {loggedInUser ? (
+                        <>
+                            <span className="font-semibold">Hello, {loggedInUser.name}</span>
+                            <button
+                                onClick={handleLogout}
+                                className="bg-red-500 px-3 py-1 rounded-lg hover:bg-red-600"
+                            >
+                                Logout
+                            </button>
+                        </>
+                    ) : (
+                        <Link
+                            to="/login"
+                            className="bg-yellow-400 text-black px-4 py-1 rounded-lg hover:bg-yellow-500"
+                        >
+                            Login
+                        </Link>
+                    )}
                 </ul>
 
                 {/* Mobile Menu Button */}
@@ -76,17 +75,33 @@ function Navbar() {
                         <Link to="/" className="hover:text-gray-200">Home</Link>
                     </li>
                     <li>
-                        <Link to="/about" className="hover:text-gray-200">About</Link>
-                    </li>
-                    <li>
                         <Link to="/search" className="hover:text-gray-200">Search</Link>
                     </li>
                     <li>
-                        <Link to="/contact" className="hover:text-gray-200">Contact</Link>
+                        <Link to="/cart" className="hover:text-gray-200">Cart</Link>
                     </li>
                     <li>
-                        <Link to="/login" className="hover:text-gray-200">Login</Link>
+                        <Link to="/wishlist" className="hover:text-gray-200">Wishlist</Link>
                     </li>
+
+                    {loggedInUser ? (
+                        <>
+                            <span className="font-semibold">Hello, {loggedInUser.name}</span>
+                            <button
+                                onClick={handleLogout}
+                                className="bg-red-500 px-3 py-1 rounded-lg hover:bg-red-600"
+                            >
+                                Logout
+                            </button>
+                        </>
+                    ) : (
+                        <Link
+                            to="/login"
+                            className="bg-yellow-400 text-black px-4 py-1 rounded-lg hover:bg-yellow-500"
+                        >
+                            Login
+                        </Link>
+                    )}
                 </ul>
             )}
         </nav>

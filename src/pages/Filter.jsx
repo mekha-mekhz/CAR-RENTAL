@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom"; // ✅ import useNavigate
+import { useNavigate } from "react-router-dom";
 
 function Filter() {
     const [cars, setCars] = useState([]);
@@ -7,20 +7,22 @@ function Filter() {
     const [query, setQuery] = useState("");
     const [brand, setBrand] = useState("All");
     const [price, setPrice] = useState("All");
+    const [availability, setAvailability] = useState("All"); // ✅ new state
 
-    const navigate = useNavigate(); // ✅ hook for navigation
+    const navigate = useNavigate();
 
     useEffect(() => {
-        fetch("/cars.json")
+        fetch("https://mekha-mekhz.github.io/carsdetails/cardetails.json")
             .then((res) => res.json())
-            .then((data) => setCars(data));
+            .then((data) => setCars(data))
+            .catch((err) => console.error("Error fetching cars:", err));
     }, []);
 
     const filteredCars = cars.filter((car) => {
         const matchesSearch =
             query === "" ||
-            car.name.toLowerCase().includes(query.toLowerCase()) ||
-            car.brand.toLowerCase().includes(query.toLowerCase());
+            (car.model?.toLowerCase().includes(query.toLowerCase()) ||
+                car.brand?.toLowerCase().includes(query.toLowerCase()));
 
         const matchesBrand = brand === "All" || car.brand === brand;
 
@@ -30,10 +32,14 @@ function Filter() {
             (price === "Mid" && car.price >= 2000 && car.price <= 4000) ||
             (price === "High" && car.price > 4000);
 
-        return matchesSearch && matchesBrand && matchesPrice;
+        const matchesAvailability =
+            availability === "All" ||
+            (availability === "Available" && car.available === true) ||
+            (availability === "NotAvailable" && car.available === false);
+
+        return matchesSearch && matchesBrand && matchesPrice && matchesAvailability;
     });
 
-    // ✅ navigate to BookingForm with car details
     const handleBookNow = (car) => {
         navigate("/booking", { state: car });
     };
@@ -46,7 +52,7 @@ function Filter() {
             <div className="flex flex-wrap gap-4 mb-6 justify-center">
                 <input
                     type="text"
-                    placeholder="Search by name or brand..."
+                    placeholder="Search by model or brand..."
                     value={queryInput}
                     onChange={(e) => setQueryInput(e.target.value)}
                     className="border p-2 rounded-lg w-64"
@@ -68,6 +74,12 @@ function Filter() {
                     <option value="Honda">Honda</option>
                     <option value="BMW">BMW</option>
                     <option value="Audi">Audi</option>
+                    <option value="Tesla">Tesla</option>
+                    <option value="Ford">Ford</option>
+                    <option value="Hyundai">Hyundai</option>
+                    <option value="Mercedes">Mercedes</option>
+                    <option value="Kia">Kia</option>
+                    <option value="Chevrolet">Chevrolet</option>
                 </select>
 
                 <select
@@ -79,6 +91,17 @@ function Filter() {
                     <option value="Low">Below $2000</option>
                     <option value="Mid">$2000 - $4000</option>
                     <option value="High">Above $4000</option>
+                </select>
+
+                {/* ✅ Availability filter */}
+                <select
+                    value={availability}
+                    onChange={(e) => setAvailability(e.target.value)}
+                    className="border p-2 rounded-lg"
+                >
+                    <option value="All">All</option>
+                    <option value="Available">Available</option>
+                    <option value="NotAvailable">Not Available</option>
                 </select>
             </div>
 
@@ -92,17 +115,23 @@ function Filter() {
                         >
                             <img
                                 src={car.image}
-                                alt={car.name}
+                                alt={car.model}
                                 className="w-full h-40 object-cover rounded-lg mb-4"
                             />
-                            <h2 className="text-xl font-semibold">{car.name}</h2>
+                            <h2 className="text-xl font-semibold">{car.model}</h2>
                             <p className="text-gray-600">Brand: {car.brand}</p>
                             <p className="text-gray-600">Price: ${car.price}</p>
+                            <p
+                                className={`font-semibold ${car.available ? "text-green-600" : "text-red-600"
+                                    }`}
+                            >
+                                {car.available ? "Available" : "Not Available"}
+                            </p>
 
-                            {/* ✅ Book Now */}
                             <button
                                 onClick={() => handleBookNow(car)}
                                 className="mt-4 w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700"
+                                disabled={!car.available} // Disable if not available
                             >
                                 Book Now
                             </button>
