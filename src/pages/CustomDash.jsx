@@ -21,6 +21,12 @@ function CustomerDashboard() {
             <h1 className="text-3xl font-bold mb-6">Welcome, {user.name}!</h1>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <Link
+                    to="/book-now"
+                    className="bg-blue-600 text-white p-6 rounded-lg shadow hover:bg-blue-700 text-center"
+                >
+                    Book Now
+                </Link>
+                <Link
                     to="/my-bookings"
                     className="bg-blue-600 text-white p-6 rounded-lg shadow hover:bg-blue-700 text-center"
                 >

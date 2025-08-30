@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { addToCart, addToWishlist } from "../redux/CartSlice";
+import { useParams, useNavigate } from "react-router-dom";
 
-function Cardetails() {
+function VisitorCarDetails() {
     const { carId } = useParams();
     const [car, setCar] = useState(null);
-    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetch("https://mekha-mekhz.github.io/carsdetails/cardetails.json")
@@ -21,15 +19,12 @@ function Cardetails() {
         return <h2 className="text-center text-xl">Loading car details...</h2>;
     }
 
-    // ✅ Dispatch to Redux instead of localStorage
-    const handleAddToCart = () => {
-        dispatch(addToCart(car));
-        alert("Car added to cart ✅");
+    const handleLoginRedirect = () => {
+        navigate("/login");
     };
 
-    const handleAddToWishlist = () => {
-        dispatch(addToWishlist(car));
-        alert("Car added to wishlist ❤️");
+    const handleBackHome = () => {
+        navigate("/");
     };
 
     return (
@@ -43,32 +38,36 @@ function Cardetails() {
             <p className="text-gray-600 mb-2">Brand: {car.brand}</p>
             <p className="text-gray-600 mb-2">Model: {car.model}</p>
             <p className="text-gray-600 mb-2">Year: {car.year}</p>
-            <p className="text-gray-800 font-semibold mb-2">Price per day: ${car.price}</p>
+            <p className="text-gray-800 font-semibold mb-2">
+                Price per day: ${car.price}
+            </p>
             <p className="text-gray-600 mb-2">Type: {car.type}</p>
             <p className="text-gray-600 mb-2">
                 Features: {car.features?.join(", ")}
             </p>
-            <p className={`mt-2 font-bold ${car.available ? "text-green-600" : "text-red-600"}`}>
+            <p
+                className={`mt-2 font-bold ${car.available ? "text-green-600" : "text-red-600"
+                    }`}
+            >
                 {car.available ? "Available" : "Not Available"}
             </p>
 
-            <div className="flex gap-4 mt-6">
+            <div className="flex justify-center gap-4 mt-6">
                 <button
-                    onClick={handleAddToCart}
-                    className="bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700"
-                    disabled={!car.available}
+                    onClick={handleLoginRedirect}
+                    className="bg-blue-600 text-white py-2 px-6 rounded-lg hover:bg-blue-700"
                 >
-                    Add to Cart
+                    Login to Continue
                 </button>
                 <button
-                    onClick={handleAddToWishlist}
-                    className="bg-yellow-500 text-black py-2 px-4 rounded-lg hover:bg-yellow-600"
+                    onClick={handleBackHome}
+                    className="bg-gray-600 text-white py-2 px-6 rounded-lg hover:bg-gray-700"
                 >
-                    Wishlist
+                    Back to Home
                 </button>
             </div>
         </div>
     );
 }
 
-export default Cardetails;
+export default VisitorCarDetails;

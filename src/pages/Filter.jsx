@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addToCart, addToWishlist } from "../redux/CartSlice"; // ✅ adjust path if needed
 
 function Filter() {
     const [cars, setCars] = useState([]);
@@ -7,10 +9,12 @@ function Filter() {
     const [query, setQuery] = useState("");
     const [brand, setBrand] = useState("All");
     const [price, setPrice] = useState("All");
-    const [availability, setAvailability] = useState("All"); // ✅ new state
+    const [availability, setAvailability] = useState("All");
 
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
+    // ✅ Fetch cars from JSON
     useEffect(() => {
         fetch("https://mekha-mekhz.github.io/carsdetails/cardetails.json")
             .then((res) => res.json())
@@ -18,6 +22,7 @@ function Filter() {
             .catch((err) => console.error("Error fetching cars:", err));
     }, []);
 
+    // ✅ Filtering logic
     const filteredCars = cars.filter((car) => {
         const matchesSearch =
             query === "" ||
@@ -40,15 +45,28 @@ function Filter() {
         return matchesSearch && matchesBrand && matchesPrice && matchesAvailability;
     });
 
+    // ✅ Book Now
     const handleBookNow = (car) => {
         navigate("/booking", { state: car });
+    };
+
+    // ✅ Add to Cart
+    const handleAddToCart = (car) => {
+        dispatch(addToCart(car));
+        alert(`${car.brand} added to cart ✅`);
+    };
+
+    // ✅ Add to Wishlist
+    const handleAddToWishlist = (car) => {
+        dispatch(addToWishlist(car));
+        alert(`${car.brand} added to wishlist ❤️`);
     };
 
     return (
         <div className="p-6">
             <h1 className="text-3xl font-bold mb-6 text-center">Find Your Car</h1>
 
-            {/* Search + Filters */}
+            {/* 🔎 Search + Filters */}
             <div className="flex flex-wrap gap-4 mb-6 justify-center">
                 <input
                     type="text"
@@ -64,6 +82,7 @@ function Filter() {
                     Search
                 </button>
 
+                {/* Brand filter */}
                 <select
                     value={brand}
                     onChange={(e) => setBrand(e.target.value)}
@@ -82,6 +101,7 @@ function Filter() {
                     <option value="Chevrolet">Chevrolet</option>
                 </select>
 
+                {/* Price filter */}
                 <select
                     value={price}
                     onChange={(e) => setPrice(e.target.value)}
@@ -93,7 +113,7 @@ function Filter() {
                     <option value="High">Above $4000</option>
                 </select>
 
-                {/* ✅ Availability filter */}
+                {/* Availability filter */}
                 <select
                     value={availability}
                     onChange={(e) => setAvailability(e.target.value)}
@@ -105,7 +125,7 @@ function Filter() {
                 </select>
             </div>
 
-            {/* Cars Grid */}
+            {/* 🚗 Cars Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 {filteredCars.length > 0 ? (
                     filteredCars.map((car) => (
@@ -122,19 +142,35 @@ function Filter() {
                             <p className="text-gray-600">Brand: {car.brand}</p>
                             <p className="text-gray-600">Price: ${car.price}</p>
                             <p
-                                className={`font-semibold ${car.available ? "text-green-600" : "text-red-600"
-                                    }`}
+                                className={`font-semibold ${car.available ? "text-green-600" : "text-red-600"}`}
                             >
                                 {car.available ? "Available" : "Not Available"}
                             </p>
 
-                            <button
-                                onClick={() => handleBookNow(car)}
-                                className="mt-4 w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700"
-                                disabled={!car.available} // Disable if not available
-                            >
-                                Book Now
-                            </button>
+                            {/* Buttons */}
+                            <div className="mt-4 space-y-2">
+                                <button
+                                    onClick={() => handleBookNow(car)}
+                                    className="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700"
+                                    disabled={!car.available}
+                                >
+                                    Book Now
+                                </button>
+
+                                <button
+                                    onClick={() => handleAddToCart(car)}
+                                    className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700"
+                                >
+                                    Add to Cart
+                                </button>
+
+                                <button
+                                    onClick={() => handleAddToWishlist(car)}
+                                    className="w-full bg-yellow-400 text-black py-2 rounded-lg hover:bg-yellow-500"
+                                >
+                                    Wishlist
+                                </button>
+                            </div>
                         </div>
                     ))
                 ) : (

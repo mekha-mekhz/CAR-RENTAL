@@ -1,41 +1,53 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { removeFromWishlist, clearWishlist } from "../redux/CartSlice";
 
 function Wishlist() {
-    const [wishlistItems, setWishlistItems] = useState([]);
-
-    useEffect(() => {
-        const wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
-        setWishlistItems(wishlist);
-    }, []);
-
-    const handleRemove = (id) => {
-        const updatedWishlist = wishlistItems.filter(item => item.id !== id);
-        localStorage.setItem("wishlist", JSON.stringify(updatedWishlist));
-        setWishlistItems(updatedWishlist);
-    };
+    const wishlistItems = useSelector((state) => state.cart.wishlist);
+    const dispatch = useDispatch();
 
     if (wishlistItems.length === 0) {
-        return <h2 className="text-center text-xl mt-6">Your wishlist is empty.</h2>;
+        return (
+            <div className="flex flex-col items-center justify-center min-h-[60vh]">
+                <h2 className="text-2xl font-bold text-gray-700">Your Wishlist is Empty ❤️</h2>
+                <p className="text-gray-500 mt-2">Save cars you love to your wishlist.</p>
+            </div>
+        );
     }
 
     return (
-        <div className="p-6">
+        <div className="p-6 max-w-5xl mx-auto">
             <h1 className="text-3xl font-bold mb-6 text-center">Your Wishlist</h1>
+
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                {wishlistItems.map(car => (
+                {wishlistItems.map((car) => (
                     <div key={car.id} className="border rounded-xl shadow-lg p-4 bg-white">
-                        <img src={car.image} alt={car.name || car.model} className="w-full h-40 object-cover rounded-lg mb-4" />
+                        <img
+                            src={car.image}
+                            alt={car.name || car.model}
+                            className="w-full h-40 object-cover rounded-lg mb-4"
+                        />
                         <h2 className="text-xl font-semibold">{car.name || car.model}</h2>
                         <p className="text-gray-600">Brand: {car.brand}</p>
-                        <p className="text-gray-600">Price: ${car.price}</p>
+                        <p className="text-gray-800 font-semibold">Price: ${car.price}</p>
+
                         <button
-                            onClick={() => handleRemove(car.id)}
-                            className="mt-4 w-full bg-red-600 text-white py-2 rounded-lg hover:bg-red-700"
+                            onClick={() => dispatch(removeFromWishlist(car.id))}
+                            className="mt-3 w-full bg-red-600 text-white py-2 rounded-lg hover:bg-red-700"
                         >
                             Remove
                         </button>
                     </div>
                 ))}
+            </div>
+
+            <div className="mt-6 text-right">
+                <button
+                    onClick={() => dispatch(clearWishlist())}
+                    className="bg-gray-700 text-white px-6 py-2 rounded-lg hover:bg-gray-800"
+                >
+                    Clear Wishlist
+                </button>
             </div>
         </div>
     );

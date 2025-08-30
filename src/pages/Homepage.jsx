@@ -32,7 +32,7 @@ function Homepage() {
                     <p className="text-xl sm:text-2xl font-medium mb-8 text-gray-200">
                         Rent your dream car today. Affordable, reliable, and available anytime you need.
                     </p>
-                    <div className="flex flex-col sm:flex-row justify-center gap-4">
+                    {/* <div className="flex flex-col sm:flex-row justify-center gap-4">
                         <Link
                             to="/cars"
                             className="px-6 py-3 bg-yellow-400 text-black font-semibold rounded-lg shadow-md hover:bg-yellow-500 transition"
@@ -45,7 +45,7 @@ function Homepage() {
                         >
                             Get Started
                         </Link>
-                    </div>
+                    </div> */}
                 </div>
             </section>
 

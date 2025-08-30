@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function Navbar() {
     const navigate = useNavigate();
     const [loggedInUser, setLoggedInUser] = useState(null);
     const [isOpen, setIsOpen] = useState(false);
+
+    // Get cart count from Redux
+    const cartCount = useSelector((state) => state.cart.items.length);
 
     // Load logged-in user from localStorage
     useEffect(() => {
@@ -33,10 +37,23 @@ function Navbar() {
                         <Link to="/search" className="hover:text-gray-200">Search</Link>
                     </li>
                     <li>
-                        <Link to="/cart" className="hover:text-gray-200">Cart</Link>
+                        <Link to="/about" className="hover:text-gray-200">About</Link>
                     </li>
                     <li>
-                        <Link to="/wishlist" className="hover:text-gray-200">Wishlist</Link>
+                        <Link to="/contact" className="hover:text-gray-200">Contact</Link>
+                    </li>
+                    <li className="relative">
+                        <Link to="/cart" className="hover:text-gray-200">
+                            🛒 Cart
+                        </Link>
+                        {cartCount > 0 && (
+                            <span className="absolute -top-2 -right-3 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded-full">
+                                {cartCount}
+                            </span>
+                        )}
+                    </li>
+                    <li>
+                        <Link to="/wishlist" className="hover:text-gray-200">❤️ Wishlist</Link>
                     </li>
 
                     {loggedInUser ? (
@@ -77,11 +94,18 @@ function Navbar() {
                     <li>
                         <Link to="/search" className="hover:text-gray-200">Search</Link>
                     </li>
-                    <li>
-                        <Link to="/cart" className="hover:text-gray-200">Cart</Link>
+                    <li className="relative">
+                        <Link to="/cart" className="hover:text-gray-200">
+                            🛒 Cart
+                        </Link>
+                        {cartCount > 0 && (
+                            <span className="absolute top-0 left-16 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded-full">
+                                {cartCount}
+                            </span>
+                        )}
                     </li>
                     <li>
-                        <Link to="/wishlist" className="hover:text-gray-200">Wishlist</Link>
+                        <Link to="/wishlist" className="hover:text-gray-200">❤️ Wishlist</Link>
                     </li>
 
                     {loggedInUser ? (

@@ -18,6 +18,9 @@ import Wishlist from "./pages/Wishlist"
 import CustomerDashboard from "./pages/CustomDash"
 import RentalDashboard from "./pages/RentalDash"
 
+import Payment from "./pages/Paymentfor"
+import Support from "./pages/Support"
+
 
 function App() {
   const router = createBrowserRouter(
@@ -63,6 +66,10 @@ function App() {
             path: "/dashboard", element: <CustomerDashboard />
           }, {
             path: "/agencydash", element: <RentalDashboard />
+          }, {
+            path: "/payment", element: <Payment />
+          }, {
+            path: "/support", element: <Support />
           }
 
         ]

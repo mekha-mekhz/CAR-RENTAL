@@ -50,7 +50,7 @@ function Contact() {
                             <label className="block text-gray-700 font-medium mb-1">Email Address</label>
                             <input
                                 type="email"
-                                placeholder="your.email@example.com"
+                                placeholder="enter email"
                                 className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                             />
                         </div>
@@ -59,7 +59,7 @@ function Contact() {
                             <label className="block text-gray-700 font-medium mb-1">Phone Number</label>
                             <input
                                 type="tel"
-                                placeholder="+91 98765 43210"
+                                placeholder="enter mobile number"
                                 className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                             />
                         </div>
