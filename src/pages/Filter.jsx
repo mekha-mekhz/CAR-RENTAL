@@ -151,7 +151,7 @@ function Filter() {
                             <div className="mt-4 space-y-2">
                                 <button
                                     onClick={() => handleBookNow(car)}
-                                    className="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700"
+                                    className="w-full bg-green-600 text-white py-3 rounded-lg text-lg font-semibold hover:bg-green-700"
                                     disabled={!car.available}
                                 >
                                     Book Now
@@ -159,16 +159,23 @@ function Filter() {
 
                                 <button
                                     onClick={() => handleAddToCart(car)}
-                                    className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700"
+                                    className="w-full bg-blue-600 text-white py-3 rounded-lg text-lg font-semibold hover:bg-blue-700"
                                 >
                                     Add to Cart
                                 </button>
 
                                 <button
                                     onClick={() => handleAddToWishlist(car)}
-                                    className="w-full bg-yellow-400 text-black py-2 rounded-lg hover:bg-yellow-500"
+                                    className="w-full bg-yellow-400 text-black py-3 rounded-lg text-lg font-semibold hover:bg-yellow-500"
                                 >
                                     Wishlist
+                                </button>
+
+                                <button
+                                    onClick={() => navigate(`/car/${car.id}`, { state: car })}
+                                    className="w-full bg-gray-800 text-white py-3 rounded-lg text-lg font-semibold hover:bg-gray-900"
+                                >
+                                    View More
                                 </button>
                             </div>
                         </div>

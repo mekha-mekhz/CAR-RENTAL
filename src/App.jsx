@@ -50,7 +50,7 @@ function App() {
           }, {
             path: "/search", element: <Filter />
           }, {
-            path: "/cars/:carId", element: <Cardetails />
+            path: "/car/:carid", element: <Cardetails />
           },
           {
             path: "/register-customer", element: <CustomerRegister />

@@ -1,74 +1,50 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { addToCart, addToWishlist } from "../redux/CartSlice";
+import React from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
-function Cardetails() {
-    const { carId } = useParams();
-    const [car, setCar] = useState(null);
-    const dispatch = useDispatch();
-
-    useEffect(() => {
-        fetch("https://mekha-mekhz.github.io/carsdetails/cardetails.json")
-            .then((res) => res.json())
-            .then((data) => {
-                const foundCar = data.find((c) => c.id === parseInt(carId));
-                setCar(foundCar);
-            });
-    }, [carId]);
+function CarDetails() {
+    const location = useLocation();
+    const navigate = useNavigate();
+    const car = location.state;
 
     if (!car) {
-        return <h2 className="text-center text-xl">Loading car details...</h2>;
+        return <p className="text-center mt-10 text-red-500">Car details not found</p>;
     }
 
-    // ✅ Dispatch to Redux instead of localStorage
-    const handleAddToCart = () => {
-        dispatch(addToCart(car));
-        alert("Car added to cart ✅");
-    };
-
-    const handleAddToWishlist = () => {
-        dispatch(addToWishlist(car));
-        alert("Car added to wishlist ❤️");
-    };
-
     return (
-        <div className="max-w-3xl mx-auto p-6 bg-white shadow-lg rounded-xl mt-6">
-            <img
-                src={car.image}
-                alt={car.name}
-                className="w-full h-64 object-cover rounded-lg mb-4"
-            />
-            <h1 className="text-3xl font-bold mb-2">{car.name || car.model}</h1>
-            <p className="text-gray-600 mb-2">Brand: {car.brand}</p>
-            <p className="text-gray-600 mb-2">Model: {car.model}</p>
-            <p className="text-gray-600 mb-2">Year: {car.year}</p>
-            <p className="text-gray-800 font-semibold mb-2">Price per day: ${car.price}</p>
-            <p className="text-gray-600 mb-2">Type: {car.type}</p>
-            <p className="text-gray-600 mb-2">
-                Features: {car.features?.join(", ")}
-            </p>
-            <p className={`mt-2 font-bold ${car.available ? "text-green-600" : "text-red-600"}`}>
-                {car.available ? "Available" : "Not Available"}
-            </p>
-
-            <div className="flex gap-4 mt-6">
-                <button
-                    onClick={handleAddToCart}
-                    className="bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700"
-                    disabled={!car.available}
+        <div className="p-6 max-w-3xl mx-auto">
+            <button
+                onClick={() => navigate(-1)}
+                className="mb-4 bg-gray-700 text-white px-4 py-2 rounded-lg hover:bg-gray-800"
+            >
+                ⬅ Back
+            </button>
+            <div className="border rounded-xl shadow-lg p-6 bg-white">
+                <img
+                    src={car.image}
+                    alt={car.model}
+                    className="w-full h-64 object-cover rounded-lg mb-4"
+                />
+                <h1 className="text-3xl font-bold">{car.model}</h1>
+                <p className="text-xl text-gray-700">Brand: {car.brand}</p>
+                <p className="text-xl text-gray-700">Year: {car.year}</p>
+                <p className="text-xl text-gray-700">Price: ${car.price}</p>
+                <p
+                    className={`text-lg font-semibold mt-2 ${car.available ? "text-green-600" : "text-red-600"
+                        }`}
                 >
-                    Add to Cart
-                </button>
-                <button
-                    onClick={handleAddToWishlist}
-                    className="bg-yellow-500 text-black py-2 px-4 rounded-lg hover:bg-yellow-600"
-                >
-                    Wishlist
-                </button>
+                    {car.available ? "Available" : "Not Available"}
+                </p>
+                <div className="mt-4">
+                    <h2 className="text-lg font-bold">Features:</h2>
+                    <ul className="list-disc ml-6 text-gray-600">
+                        {car.features?.map((f, i) => (
+                            <li key={i}>{f}</li>
+                        ))}
+                    </ul>
+                </div>
             </div>
         </div>
     );
 }
 
-export default Cardetails;
+export default CarDetails;
