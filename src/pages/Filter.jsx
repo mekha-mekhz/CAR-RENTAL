@@ -10,11 +10,12 @@ function Filter() {
     const [brand, setBrand] = useState("All");
     const [price, setPrice] = useState("All");
     const [availability, setAvailability] = useState("All");
+    const [sortBy, setSortBy] = useState("None");
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    // ✅ Fetch cars from JSON
+    // ✅ Fetch cars
     useEffect(() => {
         fetch("https://mekha-mekhz.github.io/carsdetails/cardetails.json")
             .then((res) => res.json())
@@ -22,8 +23,8 @@ function Filter() {
             .catch((err) => console.error("Error fetching cars:", err));
     }, []);
 
-    // ✅ Filtering logic
-    const filteredCars = cars.filter((car) => {
+    // ✅ Filtering
+    let filteredCars = cars.filter((car) => {
         const matchesSearch =
             query === "" ||
             (car.model?.toLowerCase().includes(query.toLowerCase()) ||
@@ -45,48 +46,72 @@ function Filter() {
         return matchesSearch && matchesBrand && matchesPrice && matchesAvailability;
     });
 
-    // ✅ Book Now
+    // ✅ Sorting logic
+    if (sortBy === "PriceLowHigh") {
+        filteredCars = [...filteredCars].sort((a, b) => a.price - b.price);
+    } else if (sortBy === "PriceHighLow") {
+        filteredCars = [...filteredCars].sort((a, b) => b.price - a.price);
+    } else if (sortBy === "BrandAZ") {
+        filteredCars = [...filteredCars].sort((a, b) =>
+            a.brand.localeCompare(b.brand)
+        );
+    } else if (sortBy === "ModelAZ") {
+        filteredCars = [...filteredCars].sort((a, b) =>
+            a.model.localeCompare(b.model)
+        );
+    }
+
+    // ✅ Actions
     const handleBookNow = (car) => {
         navigate("/booking", { state: car });
     };
-
-    // ✅ Add to Cart
     const handleAddToCart = (car) => {
         dispatch(addToCart(car));
         alert(`${car.brand} added to cart ✅`);
     };
-
-    // ✅ Add to Wishlist
     const handleAddToWishlist = (car) => {
         dispatch(addToWishlist(car));
         alert(`${car.brand} added to wishlist ❤️`);
     };
 
+    // ✅ Reset Filters
+    const handleClearAll = () => {
+        setQueryInput("");
+        setQuery("");
+        setBrand("All");
+        setPrice("All");
+        setAvailability("All");
+        setSortBy("None");
+    };
+
     return (
         <div className="p-6">
-            <h1 className="text-3xl font-bold mb-6 text-center">Find Your Car</h1>
+            <h1 className="text-3xl font-bold mb-8 text-center">🚗 Find Your Perfect Car</h1>
 
-            {/* 🔎 Search + Filters */}
-            <div className="flex flex-wrap gap-4 mb-6 justify-center">
-                <input
-                    type="text"
-                    placeholder="Search by model or brand..."
-                    value={queryInput}
-                    onChange={(e) => setQueryInput(e.target.value)}
-                    className="border p-2 rounded-lg w-64"
-                />
-                <button
-                    onClick={() => setQuery(queryInput)}
-                    className="bg-blue-600 text-white px-4 rounded-lg hover:bg-blue-700"
-                >
-                    Search
-                </button>
+            {/* 🔎 Search + Filters (Sticky Toolbar) */}
+            <div className="sticky top-0 z-10 bg-white shadow-md rounded-xl p-4 mb-8 flex flex-wrap gap-4 items-center justify-center">
+                {/* Search */}
+                <div className="flex gap-2">
+                    <input
+                        type="text"
+                        placeholder="Search by model or brand..."
+                        value={queryInput}
+                        onChange={(e) => setQueryInput(e.target.value)}
+                        className="border border-gray-300 p-2 rounded-lg w-64 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                    <button
+                        onClick={() => setQuery(queryInput)}
+                        className="bg-blue-600 text-white px-4 rounded-lg hover:bg-blue-700 transition"
+                    >
+                        Search
+                    </button>
+                </div>
 
                 {/* Brand filter */}
                 <select
                     value={brand}
                     onChange={(e) => setBrand(e.target.value)}
-                    className="border p-2 rounded-lg"
+                    className="border border-gray-300 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
                     <option value="All">All Brands</option>
                     <option value="Toyota">Toyota</option>
@@ -105,7 +130,7 @@ function Filter() {
                 <select
                     value={price}
                     onChange={(e) => setPrice(e.target.value)}
-                    className="border p-2 rounded-lg"
+                    className="border border-gray-300 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
                     <option value="All">All Prices</option>
                     <option value="Low">Below $2000</option>
@@ -117,12 +142,33 @@ function Filter() {
                 <select
                     value={availability}
                     onChange={(e) => setAvailability(e.target.value)}
-                    className="border p-2 rounded-lg"
+                    className="border border-gray-300 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
                     <option value="All">All</option>
                     <option value="Available">Available</option>
                     <option value="NotAvailable">Not Available</option>
                 </select>
+
+                {/* Sort by */}
+                <select
+                    value={sortBy}
+                    onChange={(e) => setSortBy(e.target.value)}
+                    className="border border-gray-300 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                >
+                    <option value="None">Sort By</option>
+                    <option value="PriceLowHigh">Price: Low → High</option>
+                    <option value="PriceHighLow">Price: High → Low</option>
+                    <option value="BrandAZ">Brand: A → Z</option>
+                    <option value="ModelAZ">Model: A → Z</option>
+                </select>
+
+                {/* ✅ Clear All Filters */}
+                <button
+                    onClick={handleClearAll}
+                    className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition"
+                >
+                    Clear All
+                </button>
             </div>
 
             {/* 🚗 Cars Grid */}
@@ -131,59 +177,68 @@ function Filter() {
                     filteredCars.map((car) => (
                         <div
                             key={car.id}
-                            className="border rounded-xl shadow-lg p-4 bg-white hover:shadow-2xl transition"
+                            className="group border rounded-2xl shadow-lg overflow-hidden bg-white hover:shadow-2xl transition duration-300"
                         >
-                            <img
-                                src={car.image}
-                                alt={car.model}
-                                className="w-full h-40 object-cover rounded-lg mb-4"
-                            />
-                            <h2 className="text-xl font-semibold">{car.model}</h2>
-                            <p className="text-gray-600">Brand: {car.brand}</p>
-                            <p className="text-gray-600">Price: ${car.price}</p>
-                            <p
-                                className={`font-semibold ${car.available ? "text-green-600" : "text-red-600"}`}
-                            >
-                                {car.available ? "Available" : "Not Available"}
-                            </p>
-
-                            {/* Buttons */}
-                            <div className="mt-4 space-y-2">
-                                <button
-                                    onClick={() => handleBookNow(car)}
-                                    className="w-full bg-green-600 text-white py-3 rounded-lg text-lg font-semibold hover:bg-green-700"
-                                    disabled={!car.available}
+                            {/* Car Image */}
+                            <div className="relative">
+                                <img
+                                    src={car.image}
+                                    alt={car.model}
+                                    className="w-full h-48 object-cover group-hover:scale-105 transition duration-300"
+                                />
+                                <span
+                                    className={`absolute top-2 right-2 px-3 py-1 text-xs rounded-full ${car.available
+                                            ? "bg-green-100 text-green-700"
+                                            : "bg-red-100 text-red-700"
+                                        }`}
                                 >
-                                    Book Now
-                                </button>
+                                    {car.available ? "Available" : "Not Available"}
+                                </span>
+                            </div>
 
-                                <button
-                                    onClick={() => handleAddToCart(car)}
-                                    className="w-full bg-blue-600 text-white py-3 rounded-lg text-lg font-semibold hover:bg-blue-700"
-                                >
-                                    Add to Cart
-                                </button>
+                            {/* Car Info */}
+                            <div className="p-4">
+                                <h2 className="text-lg font-bold text-gray-800">{car.model}</h2>
+                                <p className="text-sm text-gray-500">Brand: {car.brand}</p>
+                                <p className="text-lg font-semibold text-blue-600 mt-2">${car.price}</p>
 
-                                <button
-                                    onClick={() => handleAddToWishlist(car)}
-                                    className="w-full bg-yellow-400 text-black py-3 rounded-lg text-lg font-semibold hover:bg-yellow-500"
-                                >
-                                    Wishlist
-                                </button>
+                                {/* Buttons */}
+                                <div className="mt-4 space-y-2">
+                                    <button
+                                        onClick={() => handleBookNow(car)}
+                                        className="w-full bg-green-600 text-white py-2 rounded-xl font-medium hover:bg-green-700 transition"
+                                        disabled={!car.available}
+                                    >
+                                        Book Now
+                                    </button>
 
-                                <button
-                                    onClick={() => navigate(`/car/${car.id}`, { state: car })}
-                                    className="w-full bg-gray-800 text-white py-3 rounded-lg text-lg font-semibold hover:bg-gray-900"
-                                >
-                                    View More
-                                </button>
+                                    <div className="flex gap-2">
+                                        <button
+                                            onClick={() => handleAddToCart(car)}
+                                            className="flex-1 bg-blue-600 text-white py-2 rounded-xl font-medium hover:bg-blue-700 transition"
+                                        >
+                                            Cart
+                                        </button>
+                                        <button
+                                            onClick={() => handleAddToWishlist(car)}
+                                            className="flex-1 bg-yellow-400 text-black py-2 rounded-xl font-medium hover:bg-yellow-500 transition"
+                                        >
+                                            Wishlist
+                                        </button>
+                                    </div>
+
+                                    <button
+                                        onClick={() => navigate(`/car/${car.id}`, { state: car })}
+                                        className="w-full bg-gray-900 text-white py-2 rounded-xl font-medium hover:bg-black transition"
+                                    >
+                                        View More
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     ))
                 ) : (
-                    <p className="col-span-full text-center text-gray-500">
-                        No cars found
-                    </p>
+                    <p className="col-span-full text-center text-gray-500">No cars found</p>
                 )}
             </div>
         </div>

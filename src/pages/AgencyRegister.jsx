@@ -26,16 +26,16 @@ function AgencyRegister() {
             return;
         }
 
-        const users = JSON.parse(localStorage.getItem("users")) || [];
-        const newUser = { ...form, role: "agency" };
+        const agencies = JSON.parse(localStorage.getItem("agencies")) || [];
+        const newAgency = { ...form, role: "agency" };
 
-        if (users.some(u => u.email.toLowerCase() === form.email.toLowerCase())) {
+        if (agencies.some(u => u.email.toLowerCase() === form.email.toLowerCase())) {
             alert("Email already registered!");
             return;
         }
 
-        users.push(newUser);
-        localStorage.setItem("users", JSON.stringify(users));
+        agencies.push(newAgency);
+        localStorage.setItem("agencies", JSON.stringify(agencies));
         alert("Agency registered successfully ✅");
 
         setForm({ agencyName: "", email: "", password: "", confirmPassword: "", licenseNumber: "", location: "", totalVehicles: "" });

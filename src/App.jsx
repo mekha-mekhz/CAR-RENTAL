@@ -17,9 +17,9 @@ import BookingSummary from "./pages/BookingSummary"
 import Wishlist from "./pages/Wishlist"
 import CustomerDashboard from "./pages/CustomDash"
 import RentalDashboard from "./pages/RentalDash"
-
 import Payment from "./pages/Paymentfor"
 import Support from "./pages/Support"
+import AdminDashboard from "./pages/Adminverification"
 
 
 function App() {
@@ -70,6 +70,8 @@ function App() {
             path: "/payment", element: <Payment />
           }, {
             path: "/support", element: <Support />
+          }, {
+            path: "/admin", element: <AdminDashboard />
           }
 
         ]

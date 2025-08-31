@@ -8,19 +8,41 @@ function Login() {
 
     const handleLogin = (e) => {
         e.preventDefault();
-        const users = JSON.parse(localStorage.getItem("users")) || [];
 
-        const user = users.find(
+        // ✅ Check if Admin
+        if (email.toLowerCase().trim() === "admin@gmail.com" && password === "admin123") {
+            alert("Admin login successful!");
+            localStorage.setItem("loggedInUser", JSON.stringify({ role: "admin", email }));
+            navigate("/admin"); // go to admin page
+            return;
+        }
+
+        // ✅ Check Customer
+        const customers = JSON.parse(localStorage.getItem("customers")) || [];
+        const customer = customers.find(
             u => u.email.toLowerCase().trim() === email.toLowerCase().trim() && u.password === password
         );
+        if (customer) {
+            alert("Customer login successful!");
+            localStorage.setItem("loggedInUser", JSON.stringify(customer));
+            navigate("/dashboard");
+            return;
+        }
 
-        if (!user) return alert("Invalid email or password");
+        // ✅ Check Agency
+        const agencies = JSON.parse(localStorage.getItem("agencies")) || [];
+        const agency = agencies.find(
+            u => u.email.toLowerCase().trim() === email.toLowerCase().trim() && u.password === password
+        );
+        if (agency) {
+            alert("Agency login successful!");
+            localStorage.setItem("loggedInUser", JSON.stringify(agency));
+            navigate("/agencydash");
+            return;
+        }
 
-        alert("Login successful!");
-        localStorage.setItem("loggedInUser", JSON.stringify(user));
-
-        if (user.role === "customer") navigate("/dashboard");
-        else if (user.role === "agency") navigate("/agencydash");
+        // ❌ If nothing matches
+        alert("Invalid email or password");
     };
 
     return (
