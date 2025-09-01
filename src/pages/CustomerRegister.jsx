@@ -48,16 +48,30 @@ function CustomerRegister() {
     };
 
     return (
-        <div className="flex items-center justify-center min-h-screen bg-gray-100">
-            <form onSubmit={handleSubmit} className="bg-white p-8 rounded-lg shadow-lg w-96">
-                <h1 className="text-2xl font-bold text-center mb-6">Customer Registration</h1>
+        <div
+            className="flex items-center justify-center min-h-screen bg-cover bg-center relative"
+            style={{
+                backgroundImage: `url('https://images.pexels.com/photos/358070/pexels-photo-358070.jpeg')`, // 🚗 Car background
+            }}
+        >
+            {/* Dark overlay */}
+            <div className="absolute inset-0 bg-black/60"></div>
+
+            {/* Card */}
+            <form
+                onSubmit={handleSubmit}
+                className="relative bg-white/90 backdrop-blur-md p-8 rounded-2xl shadow-xl w-full max-w-md"
+            >
+                <h1 className="text-3xl font-extrabold text-center text-blue-700 mb-6 drop-shadow-md">
+                    Customer Registration
+                </h1>
 
                 <input
                     name="name"
                     value={form.name}
                     onChange={handleChange}
                     placeholder="Name"
-                    className="w-full px-3 py-2 border rounded-lg mb-4"
+                    className="w-full px-4 py-3 border rounded-xl mb-4 focus:ring-2 focus:ring-blue-400 outline-none"
                 />
 
                 <input
@@ -66,7 +80,7 @@ function CustomerRegister() {
                     value={form.email}
                     onChange={handleChange}
                     placeholder="Email"
-                    className="w-full px-3 py-2 border rounded-lg mb-4"
+                    className="w-full px-4 py-3 border rounded-xl mb-4 focus:ring-2 focus:ring-blue-400 outline-none"
                 />
 
                 <input
@@ -75,7 +89,7 @@ function CustomerRegister() {
                     value={form.password}
                     onChange={handleChange}
                     placeholder="Password"
-                    className="w-full px-3 py-2 border rounded-lg mb-4"
+                    className="w-full px-4 py-3 border rounded-xl mb-4 focus:ring-2 focus:ring-blue-400 outline-none"
                 />
 
                 <input
@@ -84,12 +98,12 @@ function CustomerRegister() {
                     value={form.confirmPassword}
                     onChange={handleChange}
                     placeholder="Confirm Password"
-                    className="w-full px-3 py-2 border rounded-lg mb-6"
+                    className="w-full px-4 py-3 border rounded-xl mb-6 focus:ring-2 focus:ring-blue-400 outline-none"
                 />
 
                 <button
                     type="submit"
-                    className="w-full bg-blue-600 text-white py-2 rounded-lg"
+                    className="w-full bg-gradient-to-r from-blue-500 to-blue-700 text-white py-3 rounded-xl font-semibold shadow-md hover:scale-105 transform transition"
                 >
                     Register
                 </button>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 
 function RentalDashboard() {
     const [vehicles, setVehicles] = useState([]);
-    const [form, setForm] = useState({ name: "", type: "", price: "" });
+    const [form, setForm] = useState({ name: "", type: "", price: "", image: "" });
 
     useEffect(() => {
         const pending = JSON.parse(localStorage.getItem("pendingVehicles")) || [];
@@ -36,7 +36,7 @@ function RentalDashboard() {
         alert("Vehicle submitted for Admin Approval ✅");
 
         setVehicles([...vehicles, { ...newVehicle, status: "Pending" }]);
-        setForm({ name: "", type: "", price: "" });
+        setForm({ name: "", type: "", price: "", image: "" });
     };
 
     return (
@@ -74,9 +74,18 @@ function RentalDashboard() {
                         className="border p-2 rounded"
                         required
                     />
+                    <input
+                        type="text"
+                        name="image"
+                        value={form.image}
+                        onChange={handleChange}
+                        placeholder="Image URL"
+                        className="border p-2 rounded"
+                        required
+                    />
                     <button
                         type="submit"
-                        className="bg-blue-600 text-white px-4 py-2 rounded"
+                        className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
                     >
                         Submit Vehicle
                     </button>
@@ -91,6 +100,7 @@ function RentalDashboard() {
                 <table className="w-full border-collapse border">
                     <thead>
                         <tr className="bg-gray-100">
+                            <th className="border p-2">Image</th>
                             <th className="border p-2">Name</th>
                             <th className="border p-2">Type</th>
                             <th className="border p-2">Price</th>
@@ -100,6 +110,13 @@ function RentalDashboard() {
                     <tbody>
                         {vehicles.map(v => (
                             <tr key={v.id}>
+                                <td className="border p-2">
+                                    {v.image ? (
+                                        <img src={v.image} alt={v.name} className="w-20 h-12 object-cover rounded" />
+                                    ) : (
+                                        "No Image"
+                                    )}
+                                </td>
                                 <td className="border p-2">{v.name}</td>
                                 <td className="border p-2">{v.type}</td>
                                 <td className="border p-2">₹{v.price}</td>

@@ -13,7 +13,7 @@ function Login() {
         if (email.toLowerCase().trim() === "admin@gmail.com" && password === "admin123") {
             alert("Admin login successful!");
             localStorage.setItem("loggedInUser", JSON.stringify({ role: "admin", email }));
-            navigate("/admin"); // go to admin page
+            navigate("/admin");
             return;
         }
 
@@ -46,34 +46,49 @@ function Login() {
     };
 
     return (
-        <div className="flex items-center justify-center min-h-screen bg-gray-100">
-            <form onSubmit={handleLogin} className="bg-white p-8 rounded-lg shadow-lg w-96">
-                <h1 className="text-2xl font-bold text-center mb-6">Login</h1>
+        <div
+            className="relative flex items-center justify-center min-h-screen bg-cover bg-center"
+            style={{
+                backgroundImage:
+                    "url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80')",
+            }}
+        >
+            {/* Dark Overlay */}
+            <div className="absolute inset-0 bg-black/60"></div>
+
+            {/* Login Form */}
+            <form
+                onSubmit={handleLogin}
+                className="relative bg-white/90 backdrop-blur-md p-8 rounded-2xl shadow-xl w-96"
+            >
+                <h1 className="text-3xl font-bold text-center mb-6 text-gray-800">Login</h1>
+
                 <input
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="Email"
-                    className="w-full px-3 py-2 border rounded-lg mb-4"
+                    className="w-full px-4 py-2 border rounded-lg mb-4 focus:ring-2 focus:ring-blue-500 outline-none"
                 />
                 <input
                     type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="Password"
-                    className="w-full px-3 py-2 border rounded-lg mb-6"
+                    className="w-full px-4 py-2 border rounded-lg mb-6 focus:ring-2 focus:ring-blue-500 outline-none"
                 />
+
                 <button
                     type="submit"
-                    className="w-full bg-blue-600 text-white py-2 rounded-lg"
+                    className="w-full bg-gradient-to-r from-blue-600 to-blue-800 text-white py-2 rounded-lg font-semibold hover:from-blue-700 hover:to-blue-900 transition"
                 >
                     Login
                 </button>
 
-                <p className="text-center text-gray-600 mt-4">
+                <p className="text-center text-gray-700 mt-4">
                     Don’t have an account?{" "}
                     <span
-                        className="text-blue-600 hover:underline cursor-pointer"
+                        className="text-blue-700 font-semibold hover:underline cursor-pointer"
                         onClick={() => navigate("/register")}
                     >
                         Sign up

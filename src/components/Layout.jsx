@@ -1,19 +1,19 @@
-import React from 'react'
-import { Outlet } from 'react-router-dom'
-import Navbar from './Navbar'
-import Footer from './Footer'
+import React from "react";
+import { Outlet } from "react-router-dom";
+import Navbar from "./Navbar";
+import Footer from "./Footer";
 
 function Layout() {
     return (
-        <div className="flex flex-col min-h-screen">
+        <div>
             <Navbar />
-
-            <main className="flex-grow">
+            {/* Add padding to push content below navbar */}
+            <div className="pt-20">
                 <Outlet />
-            </main>
+            </div>
             <Footer />
         </div>
-    )
+    );
 }
 
-export default Layout
+export default Layout;
