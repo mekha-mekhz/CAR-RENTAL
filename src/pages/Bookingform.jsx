@@ -6,6 +6,8 @@ function BookingForm() {
     const location = useLocation();
     const selectedCar = location.state; // Car passed from Filter page
 
+    const today = new Date().toISOString().split("T")[0]; // yyyy-mm-dd
+
     const [form, setForm] = useState({
         name: "",
         email: "",
@@ -20,27 +22,30 @@ function BookingForm() {
     const [totalPrice, setTotalPrice] = useState(0);
     const [numDays, setNumDays] = useState(0);
 
-    const today = new Date().toISOString().split("T")[0]; // yyyy-mm-dd
-
     useEffect(() => {
         if (!selectedCar) {
             navigate("/search"); // Redirect if no car selected
+        } else {
+            // Set default location from admin or JSON
+            setForm(prev => ({
+                ...prev,
+                location: selectedCar.location || selectedCar.locations?.[0]?.name || "",
+            }));
         }
     }, [selectedCar, navigate]);
 
-    // Calculate total whenever dates or driver option change
+    // Calculate total price
     useEffect(() => {
         if (form.startDate && form.endDate) {
             const start = new Date(form.startDate);
             const end = new Date(form.endDate);
             const diffTime = end - start;
-
             const days = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) || 1;
             setNumDays(days);
 
             let basePrice = days * (selectedCar?.price || 0);
             if (form.driverOption === "With Driver") {
-                basePrice += 1000; // Extra charge for driver
+                basePrice += 1000; // Extra charge
             }
             setTotalPrice(basePrice);
         }
@@ -49,25 +54,23 @@ function BookingForm() {
     const handleChange = (e) => {
         const { name, value } = e.target;
 
-        // Check for past dates
+        // Validate dates
         if ((name === "startDate" || name === "endDate") && value < today) {
             alert("Date cannot be in the past!");
             return;
         }
-
-        // Prevent end date being before start date
         if (name === "endDate" && form.startDate && value < form.startDate) {
             alert("End date cannot be before start date!");
             return;
         }
 
-        // Driver option changes delivery type automatically
+        // Driver option changes delivery type
         if (name === "driverOption" && value === "With Driver") {
-            setForm((prev) => ({ ...prev, driverOption: value, deliveryType: "We Will Pick" }));
+            setForm(prev => ({ ...prev, driverOption: value, deliveryType: "We Will Pick" }));
         } else if (name === "driverOption") {
-            setForm((prev) => ({ ...prev, driverOption: value, deliveryType: "Self Pickup" }));
+            setForm(prev => ({ ...prev, driverOption: value, deliveryType: "Self Pickup" }));
         } else {
-            setForm((prev) => ({ ...prev, [name]: value }));
+            setForm(prev => ({ ...prev, [name]: value }));
         }
     };
 
@@ -152,10 +155,9 @@ function BookingForm() {
                         className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors duration-300"
                     >
                         <option value="">Select Location</option>
-                        {selectedCar.locations?.map((loc) => (
-                            <option key={loc.name} value={loc.name}>
-                                {loc.name}
-                            </option>
+                        {selectedCar.location && <option value={selectedCar.location}>{selectedCar.location}</option>}
+                        {selectedCar.locations?.map(loc => (
+                            <option key={loc.name} value={loc.name}>{loc.name}</option>
                         ))}
                     </select>
 
