@@ -48,7 +48,7 @@ function Homepage() {
                             />
                             <div className="p-4">
                                 <h3 className="text-xl font-semibold">Luxury Sedan</h3>
-                                {/* <p className="text-gray-300">From ₹2500/day</p> */}
+                                <p className="text-gray-300">From ₹2500/day</p>
                             </div>
                         </div>
 

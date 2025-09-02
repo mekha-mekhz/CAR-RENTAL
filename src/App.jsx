@@ -20,6 +20,7 @@ import RentalDashboard from "./pages/RentalDash"
 import Payment from "./pages/Paymentfor"
 import Support from "./pages/Support"
 import AdminDashboard from "./pages/Adminverification"
+import VehicleManagement from "./pages/Vehiclemanage"
 
 
 function App() {
@@ -72,6 +73,8 @@ function App() {
             path: "/support", element: <Support />
           }, {
             path: "/admin", element: <AdminDashboard />
+          }, {
+            path: "/vehicle-management", element: <VehicleManagement />
           }
 
         ]

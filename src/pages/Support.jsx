@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-function SupportPage() {
+function Support() {
     const navigate = useNavigate();
     const [carData, setCarData] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -38,13 +38,16 @@ function SupportPage() {
 
     const { car, location } = booking;
     const selectedCar = carData.find((c) => c.id === car.id);
-    const supportTeam = selectedCar?.locations.find((loc) => loc.name === location)?.support || [];
+    const supportTeam =
+        selectedCar?.locations.find((loc) => loc.name === location)?.support || [];
 
     return (
         <div className="max-w-lg mx-auto bg-white shadow-lg rounded-lg p-6 mt-10">
             <h1 className="text-2xl font-bold mb-4 text-center">Support Team 🛠️</h1>
             <p className="mb-4 text-green-600">
-                Thank you! We provide your car in good condition. As it is a machine, mismatches may happen, so we truly consider you. Our support team is available anytime.
+                Thank you! We provide your car in good condition. As it is a machine,
+                mismatches may happen, so we truly consider you. Our support team is
+                available anytime.
             </p>
 
             <h2 className="text-xl font-semibold mb-2">
@@ -55,8 +58,11 @@ function SupportPage() {
                 <ul className="space-y-2">
                     {supportTeam.map((support) => (
                         <li key={support.id} className="border p-2 rounded-lg">
-                            <p><strong>{support.name}</strong></p>
+                            <p>
+                                <strong>{support.name}</strong>
+                            </p>
                             <p>Phone: {support.phone}</p>
+                            <p>Email: {support.email}</p>
                         </li>
                     ))}
                 </ul>
@@ -65,7 +71,7 @@ function SupportPage() {
             )}
 
             <p className="mt-4 text-gray-600 text-sm">
-                Support details will also be sent to your email.
+                Support details will also be sent to your registered email.
             </p>
 
             <div className="mt-6 text-center">
@@ -80,4 +86,4 @@ function SupportPage() {
     );
 }
 
-export default SupportPage;
+export default Support;

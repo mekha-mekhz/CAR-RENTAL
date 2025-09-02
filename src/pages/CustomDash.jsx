@@ -2,12 +2,18 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function CustomerDashboard() {
+    const [customer, setCustomer] = useState(null);
     const [cart, setCart] = useState([]);
     const [wishlist, setWishlist] = useState([]);
     const [bookings, setBookings] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
+        // Fetch logged-in user details
+        const user = JSON.parse(localStorage.getItem("loggedInUser"));
+        setCustomer(user);
+
+        // Fetch cart, wishlist, and bookings
         setCart(JSON.parse(localStorage.getItem("customerCart")) || []);
         setWishlist(JSON.parse(localStorage.getItem("customerWishlist")) || []);
         setBookings(JSON.parse(localStorage.getItem("customerBookings")) || []);
@@ -15,15 +21,21 @@ function CustomerDashboard() {
 
     return (
         <div className="p-8 max-w-6xl mx-auto">
-            <div className="flex justify-between items-center mb-6">
-                <h1 className="text-3xl font-bold">🚗 Customer Dashboard</h1>
-                <button
-                    onClick={() => navigate("/search")}
-                    className="bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 transition"
-                >
-                    🔍 Book a New Car
-                </button>
-            </div>
+            {/* Customer Info */}
+            {customer && (
+                <div className="mb-8 p-6 bg-gray-100 rounded-lg shadow flex justify-between items-center">
+                    <div>
+                        <h1 className="text-3xl font-bold">Hello, {customer.name} 👋</h1>
+                        <p className="text-gray-700">{customer.email}</p>
+                    </div>
+                    <button
+                        onClick={() => navigate("/search")}
+                        className="bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 transition"
+                    >
+                        🔍 Book a New Car
+                    </button>
+                </div>
+            )}
 
             {/* Bookings */}
             <section className="mb-10">

@@ -10,7 +10,7 @@ function Navbar() {
     // Get cart count from Redux
     const cartCount = useSelector((state) => state.cart.items.length);
 
-    // Load logged-in user
+    // Load logged-in user from localStorage
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem("loggedInUser"));
         setLoggedInUser(user);
@@ -23,41 +23,47 @@ function Navbar() {
     };
 
     return (
-        <nav className="fixed top-0 left-0 w-full z-50 bg-gray-900 text-white px-6 py-4 shadow-lg">
+        <nav className="fixed top-0 left-0 w-full z-50 bg-black/80 backdrop-blur-md text-white px-6 py-4 shadow-lg">
             <div className="flex justify-between items-center max-w-7xl mx-auto">
                 {/* Logo */}
-                <Link to="/" className="text-2xl font-bold tracking-wide">
-                    🚗 CarRental
+                <Link to="/" className="text-2xl font-bold tracking-wide text-yellow-400">
+                    🚗 FastLane
                 </Link>
 
                 {/* Desktop Menu */}
-                <ul className="hidden md:flex gap-8 items-center text-lg font-medium">
-                    <li><Link to="/" className="hover:text-yellow-400 transition">Home</Link></li>
-                    <li><Link to="/search" className="hover:text-yellow-400 transition">Search</Link></li>
-                    <li><Link to="/about" className="hover:text-yellow-400 transition">About</Link></li>
-                    <li><Link to="/contact" className="hover:text-yellow-400 transition">Contact</Link></li>
-
-                    {/* Cart */}
+                <ul className="hidden md:flex gap-8 items-center text-lg">
+                    <li>
+                        <Link to="/" className="hover:text-yellow-400 transition">Home</Link>
+                    </li>
+                    <li>
+                        <Link to="/search" className="hover:text-yellow-400 transition">Search</Link>
+                    </li>
+                    <li>
+                        <Link to="/about" className="hover:text-yellow-400 transition">About</Link>
+                    </li>
+                    <li>
+                        <Link to="/contact" className="hover:text-yellow-400 transition">Contact</Link>
+                    </li>
                     <li className="relative">
                         <Link to="/cart" className="hover:text-yellow-400 transition">
                             🛒 Cart
                         </Link>
                         {cartCount > 0 && (
-                            <span className="absolute -top-3 -right-4 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded-full">
+                            <span className="absolute -top-2 -right-3 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded-full">
                                 {cartCount}
                             </span>
                         )}
                     </li>
+                    <li>
+                        <Link to="/wishlist" className="hover:text-yellow-400 transition">❤️ Wishlist</Link>
+                    </li>
 
-                    <li><Link to="/wishlist" className="hover:text-yellow-400 transition">❤️ Wishlist</Link></li>
-
-                    {/* User / Login */}
                     {loggedInUser ? (
                         <>
-                            <span className="font-semibold">Hi, {loggedInUser.name}</span>
+                            <span className="font-medium">Hello, {loggedInUser.name}</span>
                             <button
                                 onClick={handleLogout}
-                                className="bg-gradient-to-r from-red-500 to-red-700 px-4 py-2 rounded-lg font-semibold hover:scale-105 transition"
+                                className="bg-red-500 px-4 py-1 rounded-lg hover:bg-red-600 transition"
                             >
                                 Logout
                             </button>
@@ -65,7 +71,7 @@ function Navbar() {
                     ) : (
                         <Link
                             to="/login"
-                            className="bg-gradient-to-r from-yellow-400 to-yellow-500 text-black px-5 py-2 rounded-lg font-semibold shadow-md hover:scale-105 transition"
+                            className="bg-yellow-400 text-black px-4 py-1 rounded-lg hover:bg-yellow-500 transition"
                         >
                             Login
                         </Link>
@@ -83,29 +89,47 @@ function Navbar() {
 
             {/* Mobile Dropdown */}
             {isOpen && (
-                <ul className="flex flex-col gap-4 mt-4 md:hidden bg-gray-900 p-6 rounded-lg shadow-lg text-lg">
-                    <li><Link to="/" onClick={() => setIsOpen(false)}>Home</Link></li>
-                    <li><Link to="/search" onClick={() => setIsOpen(false)}>Search</Link></li>
-                    <li><Link to="/about" onClick={() => setIsOpen(false)}>About</Link></li>
-                    <li><Link to="/contact" onClick={() => setIsOpen(false)}>Contact</Link></li>
-                    <li><Link to="/wishlist" onClick={() => setIsOpen(false)}>❤️ Wishlist</Link></li>
-                    <li><Link to="/cart" onClick={() => setIsOpen(false)}>🛒 Cart</Link></li>
+                <ul className="flex flex-col gap-4 mt-4 md:hidden bg-black/90 text-white p-6 rounded-lg shadow-md">
+                    <li>
+                        <Link to="/" className="hover:text-yellow-400">Home</Link>
+                    </li>
+                    <li>
+                        <Link to="/search" className="hover:text-yellow-400">Search</Link>
+                    </li>
+                    <li>
+                        <Link to="/about" className="hover:text-yellow-400">About</Link>
+                    </li>
+                    <li>
+                        <Link to="/contact" className="hover:text-yellow-400">Contact</Link>
+                    </li>
+                    <li className="relative">
+                        <Link to="/cart" className="hover:text-yellow-400">
+                            🛒 Cart
+                        </Link>
+                        {cartCount > 0 && (
+                            <span className="absolute top-0 left-16 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded-full">
+                                {cartCount}
+                            </span>
+                        )}
+                    </li>
+                    <li>
+                        <Link to="/wishlist" className="hover:text-yellow-400">❤️ Wishlist</Link>
+                    </li>
 
                     {loggedInUser ? (
-                        <button
-                            onClick={() => {
-                                handleLogout();
-                                setIsOpen(false);
-                            }}
-                            className="bg-gradient-to-r from-red-500 to-red-700 px-4 py-2 rounded-lg font-semibold"
-                        >
-                            Logout
-                        </button>
+                        <>
+                            <span className="font-medium">Hello, {loggedInUser.name}</span>
+                            <button
+                                onClick={handleLogout}
+                                className="bg-red-500 px-3 py-1 rounded-lg hover:bg-red-600"
+                            >
+                                Logout
+                            </button>
+                        </>
                     ) : (
                         <Link
                             to="/login"
-                            onClick={() => setIsOpen(false)}
-                            className="bg-gradient-to-r from-yellow-400 to-yellow-500 text-black px-5 py-2 rounded-lg font-semibold"
+                            className="bg-yellow-400 text-black px-4 py-1 rounded-lg hover:bg-yellow-500"
                         >
                             Login
                         </Link>

@@ -1,6 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { ThemeContext } from "../context/Themecontext";
 
 function AgencyRegister() {
+    const { theme } = useContext(ThemeContext);
+
     const [form, setForm] = useState({
         agencyName: "",
         email: "",
@@ -11,12 +14,13 @@ function AgencyRegister() {
         totalVehicles: "",
     });
 
-    const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+    const handleChange = (e) =>
+        setForm({ ...form, [e.target.name]: e.target.value });
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        if (Object.values(form).some(v => !v)) {
+        if (Object.values(form).some((v) => !v)) {
             alert("All fields are required!");
             return;
         }
@@ -38,21 +42,50 @@ function AgencyRegister() {
         localStorage.setItem("agencies", JSON.stringify(agencies));
         alert("Agency registered successfully ✅");
 
-        setForm({ agencyName: "", email: "", password: "", confirmPassword: "", licenseNumber: "", location: "", totalVehicles: "" });
+        setForm({
+            agencyName: "",
+            email: "",
+            password: "",
+            confirmPassword: "",
+            licenseNumber: "",
+            location: "",
+            totalVehicles: "",
+        });
     };
 
     return (
-        <div className="flex items-center justify-center min-h-screen bg-gray-100">
-            <form onSubmit={handleSubmit} className="bg-white p-8 rounded-lg shadow-lg w-96">
+        <div className={`flex items-center justify-center min-h-screen transition-colors duration-300 ${theme === "dark" ? "bg-gray-900" : "bg-gray-100"}`}>
+            <form
+                onSubmit={handleSubmit}
+                className={`p-8 rounded-lg shadow-lg w-96 transition-colors duration-300
+                    ${theme === "dark" ? "bg-gray-800 text-white" : "bg-white text-gray-900"}`}
+            >
                 <h1 className="text-2xl font-bold text-center mb-6">Agency Registration</h1>
-                <input name="agencyName" value={form.agencyName} onChange={handleChange} placeholder="Agency Name" className="w-full px-3 py-2 border rounded-lg mb-4" />
-                <input name="email" type="email" value={form.email} onChange={handleChange} placeholder="Email" className="w-full px-3 py-2 border rounded-lg mb-4" />
-                <input name="password" type="password" value={form.password} onChange={handleChange} placeholder="Password" className="w-full px-3 py-2 border rounded-lg mb-4" />
-                <input name="confirmPassword" type="password" value={form.confirmPassword} onChange={handleChange} placeholder="Confirm Password" className="w-full px-3 py-2 border rounded-lg mb-4" />
-                <input name="licenseNumber" value={form.licenseNumber} onChange={handleChange} placeholder="License Number" className="w-full px-3 py-2 border rounded-lg mb-4" />
-                <input name="location" value={form.location} onChange={handleChange} placeholder="Location" className="w-full px-3 py-2 border rounded-lg mb-4" />
-                <input name="totalVehicles" type="number" value={form.totalVehicles} onChange={handleChange} placeholder="Total Vehicles" className="w-full px-3 py-2 border rounded-lg mb-6" />
-                <button type="submit" className="w-full bg-blue-600 text-white py-2 rounded-lg">Register</button>
+
+                {["agencyName", "email", "password", "confirmPassword", "licenseNumber", "location", "totalVehicles"].map((field, i) => (
+                    <input
+                        key={i}
+                        name={field}
+                        type={field.includes("password") ? "password" : field === "email" ? "email" : field === "totalVehicles" ? "number" : "text"}
+                        value={form[field]}
+                        onChange={handleChange}
+                        placeholder={field
+                            .replace(/([A-Z])/g, " $1")
+                            .replace(/^./, str => str.toUpperCase())}
+                        className={`w-full px-3 py-2 border rounded-lg mb-4 focus:outline-none focus:ring-2 transition-colors duration-300
+                            ${theme === "dark"
+                                ? "bg-gray-700 border-gray-600 text-white placeholder-gray-400 focus:ring-blue-500"
+                                : "bg-white border-gray-300 text-gray-900 placeholder-gray-500 focus:ring-blue-500"
+                            }`}
+                    />
+                ))}
+
+                <button
+                    type="submit"
+                    className="w-full bg-blue-600 dark:bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 transition-colors duration-300"
+                >
+                    Register
+                </button>
             </form>
         </div>
     );
