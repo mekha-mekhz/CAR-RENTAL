@@ -54,24 +54,45 @@ function AgencyRegister() {
     };
 
     return (
-        <div className={`flex items-center justify-center min-h-screen transition-colors duration-300 ${theme === "dark" ? "bg-gray-900" : "bg-gray-100"}`}>
+        <div
+            className={`flex items-center justify-center min-h-screen transition-colors duration-300 ${theme === "dark" ? "bg-gray-900" : "bg-gray-100"
+                }`}
+        >
             <form
                 onSubmit={handleSubmit}
                 className={`p-8 rounded-lg shadow-lg w-96 transition-colors duration-300
                     ${theme === "dark" ? "bg-gray-800 text-white" : "bg-white text-gray-900"}`}
             >
-                <h1 className="text-2xl font-bold text-center mb-6">Agency Registration</h1>
+                <h1 className="text-2xl font-bold text-center mb-6">
+                    Agency Registration
+                </h1>
 
-                {["agencyName", "email", "password", "confirmPassword", "licenseNumber", "location", "totalVehicles"].map((field, i) => (
+                {[
+                    "agencyName",
+                    "email",
+                    "password",
+                    "confirmPassword",
+                    "licenseNumber",
+                    "location",
+                    "totalVehicles",
+                ].map((field, i) => (
                     <input
                         key={i}
                         name={field}
-                        type={field.includes("password") ? "password" : field === "email" ? "email" : field === "totalVehicles" ? "number" : "text"}
+                        type={
+                            field === "password" || field === "confirmPassword"
+                                ? "password"
+                                : field === "email"
+                                    ? "email"
+                                    : field === "totalVehicles"
+                                        ? "number"
+                                        : "text"
+                        }
                         value={form[field]}
                         onChange={handleChange}
                         placeholder={field
                             .replace(/([A-Z])/g, " $1")
-                            .replace(/^./, str => str.toUpperCase())}
+                            .replace(/^./, (str) => str.toUpperCase())}
                         className={`w-full px-3 py-2 border rounded-lg mb-4 focus:outline-none focus:ring-2 transition-colors duration-300
                             ${theme === "dark"
                                 ? "bg-gray-700 border-gray-600 text-white placeholder-gray-400 focus:ring-blue-500"
