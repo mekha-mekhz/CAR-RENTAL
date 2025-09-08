@@ -21,6 +21,7 @@ import Payment from "./pages/Paymentfor"
 import Support from "./pages/Support"
 import AdminDashboard from "./pages/Adminverification"
 import VehicleManagement from "./pages/Vehiclemanage"
+import Thankyou from "./pages/Thankyou"
 
 
 function App() {
@@ -75,6 +76,8 @@ function App() {
             path: "/admin", element: <AdminDashboard />
           }, {
             path: "/vehicle-management", element: <VehicleManagement />
+          }, {
+            path: "/thank-you", element: <Thankyou />
           }
 
         ]
