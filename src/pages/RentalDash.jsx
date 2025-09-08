@@ -1,7 +1,8 @@
-// src/pages/RentalDashboard.jsx
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 function RentalDashboard() {
+    const navigate = useNavigate();
     const [vehicles, setVehicles] = useState([]);
     const [form, setForm] = useState({ name: "", type: "", price: "", image: "" });
 
@@ -42,6 +43,16 @@ function RentalDashboard() {
 
     return (
         <div className="min-h-screen p-8 bg-gray-100 dark:bg-gray-900 transition-colors duration-300">
+            {/* Back to Home Button */}
+            <div className="mb-4">
+                <button
+                    onClick={() => navigate("/")}
+                    className="bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-800 transition"
+                >
+                    ⬅️ Back to Home
+                </button>
+            </div>
+
             <h1 className="text-3xl font-bold mb-6 text-gray-900 dark:text-white">
                 🚘 Agency Dashboard
             </h1>
@@ -57,7 +68,7 @@ function RentalDashboard() {
                         name="name"
                         value={form.name}
                         onChange={handleChange}
-                        placeholder="Vehicle Name"
+                        placeholder="Vehicle Model"
                         className="border p-2 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                         required
                     />
@@ -66,7 +77,7 @@ function RentalDashboard() {
                         name="type"
                         value={form.type}
                         onChange={handleChange}
-                        placeholder="Vehicle Type"
+                        placeholder="Vehicle Brand"
                         className="border p-2 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                         required
                     />

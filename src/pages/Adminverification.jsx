@@ -1,7 +1,10 @@
-// src/pages/AdminDashboard.jsx
+
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function AdminDashboard() {
+    const navigate = useNavigate();
+
     const [pendingVehicles, setPendingVehicles] = useState([]);
     const [approvedVehicles, setApprovedVehicles] = useState([]);
     const [rejectedVehicles, setRejectedVehicles] = useState([]);
@@ -46,7 +49,6 @@ function AdminDashboard() {
         loadData();
     }, []);
 
-    // Generic Approve / Reject handler
     const handleApprove = (item, type) => {
         if (type === "vehicle") {
             const updatedPending = pendingVehicles.filter(v => v.id !== item.id);
@@ -86,7 +88,6 @@ function AdminDashboard() {
             setRejectedVehicles(updatedRejected);
             localStorage.setItem("rejectedVehicles", JSON.stringify(updatedRejected));
         } else {
-            // For now, just remove from pending if rejected
             if (type === "feedback") {
                 const updatedPending = pendingFeedbacks.filter(f => f.id !== item.id);
                 setPendingFeedbacks(updatedPending);
@@ -187,6 +188,16 @@ function AdminDashboard() {
         <div className="min-h-screen p-8 bg-gray-100 dark:bg-gray-900 transition-colors duration-300">
             <h1 className="text-3xl font-bold mb-6 text-gray-800 dark:text-white">🛠 Admin Dashboard</h1>
 
+            {/* Vehicle Management Button */}
+            <div className="mb-6">
+                <button
+                    onClick={() => navigate("/vehicle-management")}
+                    className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition"
+                >
+                    🚗 Vehicle Management
+                </button>
+            </div>
+
             {/* Stats */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
                 <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow">
@@ -257,6 +268,7 @@ function AdminDashboard() {
                     </table>
                 )}
             </div>
+
         );
     }
 }
