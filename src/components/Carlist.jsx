@@ -5,7 +5,7 @@ function Carlist() {
     const [cars, setCars] = useState([]);
 
     useEffect(() => {
-        fetch("https://mekha-mekhz.github.io/carsdetails/cardetails.json")
+        fetch("https://raw.githubusercontent.com/mekha-mekhz/RentalCarDetails/main/RentalDetails.json")
             .then((res) => res.json())
             .then((data) => setCars(data));
     }, []);

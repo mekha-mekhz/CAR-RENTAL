@@ -1,23 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function BookingSummary() {
     const navigate = useNavigate();
-    const booking = JSON.parse(sessionStorage.getItem("latestBooking"));
+    const [booking, setBooking] = useState(null);
 
-    if (!booking) {
-        return (
-            <div className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-b from-gray-900 to-gray-800 text-white p-4">
-                <h2 className="text-xl font-bold">No booking found.</h2>
-                <button
-                    onClick={() => navigate("/search")}
-                    className="mt-4 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors"
-                >
-                    Go to Cars
-                </button>
-            </div>
-        );
-    }
+    useEffect(() => {
+        const latestBooking = JSON.parse(sessionStorage.getItem("latestBooking"));
+        if (latestBooking) {
+            setBooking(latestBooking);
+        } else {
+            navigate("/search"); // Redirect if no booking exists
+        }
+    }, [navigate]);
+
+    if (!booking) return null; // Waiting for data
 
     const {
         name,
@@ -25,7 +22,8 @@ function BookingSummary() {
         phone,
         driverOption,
         deliveryType,
-        location,
+        pickupLocation,
+        dropoffLocation,
         startDate,
         endDate,
         numDays,
@@ -51,24 +49,19 @@ function BookingSummary() {
                 <p><strong>Phone:</strong> {phone}</p>
                 <p><strong>Driver Option:</strong> {driverOption}</p>
                 <p><strong>Delivery Type:</strong> {deliveryType}</p>
-                <p><strong>Location:</strong> {location}</p>
+                <p><strong>Pickup Location:</strong> {pickupLocation}</p>
+                <p><strong>Drop-off Location:</strong> {dropoffLocation}</p>
                 <p><strong>Start Date:</strong> {startDate}</p>
                 <p><strong>End Date:</strong> {endDate}</p>
                 <p><strong>Number of Days:</strong> {numDays}</p>
-                <p><strong>Total Price:</strong> ${totalPrice}</p>
+                <p><strong>Total Price:</strong> ₹{totalPrice}</p>
 
                 <div className="mt-6 flex flex-col gap-3">
                     <button
                         onClick={() => navigate("/payment")}
-                        className="bg-green-600 hover:bg-green-700 text-white py-2 rounded-lg transition-colors"
-                    >
-                        Proceed to Payment
-                    </button>
-                    <button
-                        onClick={() => navigate("/")}
                         className="bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg transition-colors"
                     >
-                        Back to Home
+                        Proceed to payment
                     </button>
                 </div>
             </div>

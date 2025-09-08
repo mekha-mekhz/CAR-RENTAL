@@ -17,7 +17,7 @@ function Filter() {
 
     useEffect(() => {
         // Fetch JSON cars
-        fetch("https://mekha-mekhz.github.io/carsdetails/cardetails.json")
+        fetch("https://raw.githubusercontent.com/mekha-mekhz/RentalCarDetails/main/RentalDetails.json")
             .then((res) => res.json())
             .then((data) => {
                 // Get approved vehicles from admin
